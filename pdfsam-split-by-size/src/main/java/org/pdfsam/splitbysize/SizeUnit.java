@@ -30,13 +30,13 @@ public enum SizeUnit {
     MEGABYTE(DefaultI18nContext.getInstance().i18n("Megabytes"), DefaultI18nContext.getInstance().i18n("MB")) {
         @Override
         public long toBytes(int raw) {
-            return KILOBYTE.toBytes(raw) * 1024;
+            return KILOBYTE.toBytes(raw) * 1000;
         }
     },
     KILOBYTE(DefaultI18nContext.getInstance().i18n("Kilobytes"), DefaultI18nContext.getInstance().i18n("KB")) {
         @Override
         public long toBytes(int raw) {
-            return raw * 1024;
+            return raw * 1000;
         }
     };
 

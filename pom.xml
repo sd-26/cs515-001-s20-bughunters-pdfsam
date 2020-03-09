@@ -4,7 +4,7 @@
 	<groupId>org.pdfsam</groupId>
 	<artifactId>pdfsam-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>4.1.2-SNAPSHOT</version>
+	<version>4.1.1</version>
 	<name>PDFsam</name>
 	<description>A free open source desktop application to split and merge pdf documents</description>
 	<url>https://pdfsam.org</url>
@@ -17,7 +17,7 @@
 		<connection>scm:git:git@github.com:torakiki/pdfsam.git</connection>
 		<developerConnection>scm:git:git@github.com:torakiki/pdfsam.git</developerConnection>
 		<url>scm:git:git@github.com:torakiki/pdfsam.git</url>
-		<tag>HEAD</tag>
+		<tag>v4.1.1</tag>
 	</scm>
 
 	<profiles>
@@ -113,6 +113,9 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
 						<version>1.6</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -153,6 +156,62 @@
 		</developer>
 	</developers>
 
+<<<<<<< Updated upstream
+=======
+	<repositories>
+		<repository>
+			<id>jboss</id>
+			<url>https://repository.jboss.org/nexus/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>springsource-repo</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.spring.io/release</url>
+		</repository>
+		<repository>
+			<id>pdfbox-snapshot</id>
+			<url>http://repository.apache.org/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>sonatype-snapshot</id>
+			<url>http://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jcentral</id>
+			<url>https://jcenter.bintray.com</url>
+		</repository>
+		<repository>
+			<id>sejda</id>
+			<url>https://dl.bintray.com/sejdapdf/maven/</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>bintray-plugins</name>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<url>https://jcenter.bintray.com</url>
+		</pluginRepository>
+<!--		<pluginRepository>-->
+<!--			<id>central</id>-->
+<!--			<name>Central Repository</name>-->
+<!--			<url>https://repo.maven.apache.org/maven2</url>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
+<!--		</pluginRepository>-->
+	</pluginRepositories>
+
+>>>>>>> Stashed changes
 	<build>
 		<plugins>
 			<plugin>
@@ -171,7 +230,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>

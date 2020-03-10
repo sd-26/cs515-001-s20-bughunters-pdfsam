@@ -156,8 +156,6 @@
 		</developer>
 	</developers>
 
-<<<<<<< Updated upstream
-=======
 	<repositories>
 		<repository>
 			<id>jboss</id>
@@ -193,25 +191,24 @@
 	</repositories>
 
 	<pluginRepositories>
-		<pluginRepository>
-			<id>central</id>
-			<name>bintray-plugins</name>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<url>https://jcenter.bintray.com</url>
-		</pluginRepository>
 <!--		<pluginRepository>-->
 <!--			<id>central</id>-->
-<!--			<name>Central Repository</name>-->
-<!--			<url>https://repo.maven.apache.org/maven2</url>-->
+<!--			<name>bintray-plugins</name>-->
 <!--			<snapshots>-->
 <!--				<enabled>false</enabled>-->
 <!--			</snapshots>-->
+<!--			<url>https://jcenter.bintray.com</url>-->
 <!--		</pluginRepository>-->
+		<pluginRepository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
 	</pluginRepositories>
 
->>>>>>> Stashed changes
 	<build>
 		<plugins>
 			<plugin>

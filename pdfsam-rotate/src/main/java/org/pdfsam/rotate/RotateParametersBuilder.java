@@ -26,14 +26,11 @@ import org.pdfsam.support.params.AbstractPdfOutputParametersBuilder;
 import org.pdfsam.support.params.MultipleOutputTaskParametersBuilder;
 import org.pdfsam.task.BulkRotateParameters;
 import org.pdfsam.task.PdfRotationInput;
-<<<<<<< Updated upstream
 import org.sejda.commons.collection.NullSafeSet;
-=======
-import org.sejda.common.collection.NullSafeSet;
 import org.sejda.impl.sambox.component.DefaultPdfSourceOpener;
 import org.sejda.impl.sambox.component.PDDocumentHandler;
 import org.sejda.model.exception.TaskIOException;
->>>>>>> Stashed changes
+
 import org.sejda.model.input.PdfSource;
 import org.sejda.model.output.SingleOrMultipleTaskOutput;
 import org.sejda.model.pdf.page.PageRange;

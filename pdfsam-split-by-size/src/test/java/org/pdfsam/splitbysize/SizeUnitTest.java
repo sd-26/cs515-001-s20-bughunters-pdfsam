@@ -30,7 +30,7 @@ public class SizeUnitTest {
 
     @Test
     public void toBytes() {
-        assertEquals(5 * 1024, SizeUnit.KILOBYTE.toBytes(5));
-        assertEquals(5 * 1024 * 1024, SizeUnit.MEGABYTE.toBytes(5));
+        assertEquals(5 * 1000, SizeUnit.KILOBYTE.toBytes(5));
+        assertEquals(5 * 1000 * 1000, SizeUnit.MEGABYTE.toBytes(5));
     }
 }

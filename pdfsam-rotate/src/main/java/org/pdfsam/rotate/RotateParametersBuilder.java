@@ -20,16 +20,21 @@ package org.pdfsam.rotate;
 
 import static java.util.Objects.isNull;
 
-import java.util.Set;
+import java.util.*;
 
 import org.pdfsam.support.params.AbstractPdfOutputParametersBuilder;
 import org.pdfsam.support.params.MultipleOutputTaskParametersBuilder;
 import org.pdfsam.task.BulkRotateParameters;
 import org.pdfsam.task.PdfRotationInput;
 import org.sejda.commons.collection.NullSafeSet;
+import org.sejda.impl.sambox.component.DefaultPdfSourceOpener;
+import org.sejda.impl.sambox.component.PDDocumentHandler;
+import org.sejda.model.exception.TaskIOException;
+
 import org.sejda.model.input.PdfSource;
 import org.sejda.model.output.SingleOrMultipleTaskOutput;
 import org.sejda.model.pdf.page.PageRange;
+import org.sejda.model.pdf.page.PagesSelection;
 import org.sejda.model.pdf.page.PredefinedSetOfPages;
 import org.sejda.model.rotation.Rotation;
 
@@ -52,7 +57,41 @@ class RotateParametersBuilder extends AbstractPdfOutputParametersBuilder<BulkRot
         if (isNull(pageSelection) || pageSelection.isEmpty()) {
             this.inputs.add(new PdfRotationInput(source, rotation, predefinedRotationType));
         } else {
-            this.inputs.add(new PdfRotationInput(source, rotation, pageSelection.stream().toArray(PageRange[]::new)));
+            this.inputs.add(new PdfRotationInput(source, rotation, getPageCombination(source,
+                    pageSelection.stream().toArray(PageRange[]::new))));
+        }
+    }
+
+    PagesSelection[] getPageCombination(PdfSource<?> source, PageRange...pages) {
+        List<PagesSelection> result = new ArrayList<>();
+        Set<Integer> pagestoRotate = new HashSet<>();
+        try {
+            PDDocumentHandler document = source.open(new DefaultPdfSourceOpener());
+            int totalPages = document.getNumberOfPages();
+            boolean selectEvenPages = predefinedRotationType.equals(PredefinedSetOfPages.EVEN_PAGES);
+            boolean selectOddPages = predefinedRotationType.equals(PredefinedSetOfPages.ODD_PAGES);
+            if (selectEvenPages || selectOddPages) {
+                for(PageRange range: pages)
+                {
+                    int rangeEnd = range.getEnd()>totalPages? totalPages:range.getEnd();
+                    for(int i = range.getStart(); i<=rangeEnd; i++)
+                    {
+                        if((selectEvenPages && i%2==0) || (selectOddPages && i%2!=0))
+                        {
+                            pagestoRotate.add(i);
+                        }
+                    }
+                }
+                for(int page: pagestoRotate){
+                    result.add(new PageRange(page,page));
+                }
+            }
+            else
+                result.addAll(Arrays.asList(pages));
+        } catch (TaskIOException e) {
+            e.printStackTrace();
+        } finally {
+            return result.toArray(PagesSelection[]::new);
         }
     }
 

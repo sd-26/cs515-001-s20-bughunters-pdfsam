@@ -49,54 +49,10 @@ class RotateParametersBuilder extends AbstractPdfOutputParametersBuilder<BulkRot
 
     private SingleOrMultipleTaskOutput output;
     private String prefix;
-    private Set<PdfRotationInput> inputs = new NullSafeSet<>();
-    private Rotation rotation;
-    private PredefinedSetOfPages predefinedRotationType;
-
-    void addInput(PdfSource<?> source, Set<PageRange> pageSelection) {
-        if (isNull(pageSelection) || pageSelection.isEmpty()) {
-            this.inputs.add(new PdfRotationInput(source, rotation, predefinedRotationType));
-        } else {
-            this.inputs.add(new PdfRotationInput(source, rotation, getPageCombination(source,
-                    pageSelection.stream().toArray(PageRange[]::new))));
-        }
-    }
-
-    PagesSelection[] getPageCombination(PdfSource<?> source, PageRange...pages) {
-        List<PagesSelection> result = new ArrayList<>();
-        Set<Integer> pagestoRotate = new HashSet<>();
-        try {
-            PDDocumentHandler document = source.open(new DefaultPdfSourceOpener());
-            int totalPages = document.getNumberOfPages();
-            boolean selectEvenPages = predefinedRotationType.equals(PredefinedSetOfPages.EVEN_PAGES);
-            boolean selectOddPages = predefinedRotationType.equals(PredefinedSetOfPages.ODD_PAGES);
-            if (selectEvenPages || selectOddPages) {
-                for(PageRange range: pages)
-                {
-                    int rangeEnd = range.getEnd()>totalPages? totalPages:range.getEnd();
-                    for(int i = range.getStart(); i<=rangeEnd; i++)
-                    {
-                        if((selectEvenPages && i%2==0) || (selectOddPages && i%2!=0))
-                        {
-                            pagestoRotate.add(i);
-                        }
-                    }
-                }
-                for(int page: pagestoRotate){
-                    result.add(new PageRange(page,page));
-                }
-            }
-            else
-                result.addAll(Arrays.asList(pages));
-        } catch (TaskIOException e) {
-            e.printStackTrace();
-        } finally {
-            return result.toArray(PagesSelection[]::new);
-        }
-    }
+    public DocumentPageOrientation pageOrientation;
 
     boolean hasInput() {
-        return !inputs.isEmpty();
+        return !pageOrientation.getInputs().isEmpty();
     }
 
     @Override
@@ -117,13 +73,8 @@ class RotateParametersBuilder extends AbstractPdfOutputParametersBuilder<BulkRot
         return prefix;
     }
 
-    public void rotation(Rotation rotation) {
-        this.rotation = rotation;
-    }
-
-    public void rotationType(PredefinedSetOfPages predefinedRotationType) {
-        this.predefinedRotationType = predefinedRotationType;
-
+    public void initPageOrientation(Rotation rotation, PredefinedSetOfPages predefinedRotationType) {
+        pageOrientation = new DocumentPageOrientation(rotation, predefinedRotationType);
     }
 
     @Override
@@ -134,7 +85,7 @@ class RotateParametersBuilder extends AbstractPdfOutputParametersBuilder<BulkRot
         params.setVersion(getVersion());
         params.setOutput(getOutput());
         params.setOutputPrefix(getPrefix());
-        inputs.forEach(params::addInput);
+        pageOrientation.getInputs().forEach(params::addInput);
         return params;
     }
 

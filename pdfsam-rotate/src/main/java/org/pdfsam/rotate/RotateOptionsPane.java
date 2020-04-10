@@ -84,8 +84,8 @@ class RotateOptionsPane extends HBox
 
     @Override
     public void apply(RotateParametersBuilder builder, Consumer<String> onError) {
-        builder.rotation(rotation.getSelectionModel().getSelectedItem().getKey());
-        builder.rotationType(rotationType.getSelectionModel().getSelectedItem().getKey());
+        builder.initPageOrientation(rotation.getSelectionModel().getSelectedItem().getKey(),
+                rotationType.getSelectionModel().getSelectedItem().getKey());
     }
 
     @Override

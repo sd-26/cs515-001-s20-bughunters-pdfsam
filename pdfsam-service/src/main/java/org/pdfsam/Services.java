@@ -32,6 +32,11 @@ import org.pdfsam.update.UpdateServiceConfig;
  *
  */
 public class Services {
+
+    private Services(){
+        // explicit private constructor for a utility class
+    }
+
     /**
      * Adds configurations to the injector to create all the instances necessary to have the services up and running
      */

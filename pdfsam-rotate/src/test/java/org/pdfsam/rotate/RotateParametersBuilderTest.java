@@ -55,8 +55,7 @@ public class RotateParametersBuilderTest {
         victim = new RotateParametersBuilder();
         victim.compress(true);
         victim.existingOutput(ExistingOutputPolicy.OVERWRITE);
-        victim.rotation(Rotation.DEGREES_180);
-        victim.rotationType(PredefinedSetOfPages.ODD_PAGES);
+        victim.initPageOrientation(Rotation.DEGREES_180, PredefinedSetOfPages.ODD_PAGES);
         victim.prefix("prefix");
     }
 
@@ -66,7 +65,7 @@ public class RotateParametersBuilderTest {
         victim.output(output);
         File file = folder.newFile("my.pdf");
         PdfFileSource source = PdfFileSource.newInstanceNoPassword(file);
-        victim.addInput(source, null);
+        victim.pageOrientation.addInput(source, null);
         victim.version(PdfVersion.VERSION_1_7);
         BulkRotateParameters params = victim.build();
         assertTrue(params.isCompress());
@@ -88,7 +87,7 @@ public class RotateParametersBuilderTest {
         victim.output(output);
         File file = folder.newFile("my.pdf");
         PdfFileSource source = PdfFileSource.newInstanceNoPassword(file);
-        victim.addInput(source, Collections.singleton(new PageRange(2, 5)));
+        victim.pageOrientation.addInput(source, Collections.singleton(new PageRange(2, 5)));
         victim.version(PdfVersion.VERSION_1_7);
         BulkRotateParameters params = victim.build();
         Set<PdfRotationInput> inputs = params.getInputSet();
@@ -104,8 +103,8 @@ public class RotateParametersBuilderTest {
         victim.output(output);
         File file = folder.newFile("my.pdf");
         PdfFileSource source = PdfFileSource.newInstanceNoPassword(file);
-        victim.addInput(source, Collections.singleton(new PageRange(2, 5)));
-        victim.addInput(PdfFileSource.newInstanceNoPassword(file), Collections.emptySet());
+        victim.pageOrientation.addInput(source, Collections.singleton(new PageRange(2, 5)));
+        victim.pageOrientation.addInput(PdfFileSource.newInstanceNoPassword(file), Collections.emptySet());
         BulkRotateParameters params = victim.build();
         Set<PdfRotationInput> inputs = params.getInputSet();
         assertEquals(2, inputs.size());

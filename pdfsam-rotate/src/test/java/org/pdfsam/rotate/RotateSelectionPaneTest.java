@@ -75,7 +75,7 @@ public class RotateSelectionPaneTest {
     public void empty() {
         victim.apply(builder, onError);
         verify(onError).accept(anyString());
-        verify(builder, never()).addInput(any(), any());
+        verify(builder, never()).pageOrientation.addInput(any(), any());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class RotateSelectionPaneTest {
         victim.apply(builder, onError);
         verify(onError, never()).accept(anyString());
         ArgumentCaptor<Set> ranges = ArgumentCaptor.forClass(Set.class);
-        verify(builder).addInput(any(), ranges.capture());
+        verify(builder).pageOrientation.addInput(any(), ranges.capture());
         assertTrue(ranges.getValue().isEmpty());
     }
 
@@ -97,16 +97,16 @@ public class RotateSelectionPaneTest {
         victim.apply(builder, onError);
         verify(onError, never()).accept(anyString());
         ArgumentCaptor<Set> ranges = ArgumentCaptor.forClass(Set.class);
-        verify(builder).addInput(any(), ranges.capture());
+        verify(builder).pageOrientation.addInput(any(), ranges.capture());
         assertEquals(2, ranges.getValue().size());
     }
 
     @Test
     public void converstionException() throws Exception {
         populate();
-        doThrow(new ConversionException("message")).when(builder).addInput(any(), any());
+        doThrow(new ConversionException("message")).when(builder).pageOrientation.addInput(any(), any());
         victim.apply(builder, onError);
-        verify(builder).addInput(any(), any());
+        verify(builder).pageOrientation.addInput(any(), any());
         verify(onError).accept(eq("message"));
     }
 
@@ -116,7 +116,7 @@ public class RotateSelectionPaneTest {
         victim.table().getItems().get(0).pageSelection.set("0");
         victim.apply(builder, onError);
         verify(onError).accept(anyString());
-        verify(builder, never()).addInput(any(), any());
+        verify(builder, never()).pageOrientation.addInput(any(), any());
     }
 
     private void populate() throws Exception {

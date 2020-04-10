@@ -65,8 +65,7 @@ public class RotateOptionsPaneTest extends ApplicationTest {
         RotateParametersBuilder builder = mock(RotateParametersBuilder.class);
         Consumer<String> onError = mock(Consumer.class);
         victim.apply(builder, onError);
-        verify(builder).rotation(eq(Rotation.DEGREES_90));
-        verify(builder).rotationType(eq(PredefinedSetOfPages.ALL_PAGES));
+        verify(builder).initPageOrientation(eq(Rotation.DEGREES_90), eq(PredefinedSetOfPages.ALL_PAGES));
         verify(onError, never()).accept(anyString());
     }
 
